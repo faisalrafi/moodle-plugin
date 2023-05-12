@@ -24,5 +24,10 @@ $templatecontext = (object)[
 
 echo $OUTPUT->render_from_template('local_message/manage', $templatecontext);
 
+if(isset($_GET['did'])){
+    $DB->delete_records('local_message', ['id' => $_GET['did']]);
+    redirect($CFG->wwwroot . '/local/message/manage.php', get_string('delete_form', 'local_message') . $fromform->messagetext);
+}
+
 echo $OUTPUT->footer(); 
 ?>

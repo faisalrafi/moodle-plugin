@@ -22,29 +22,22 @@ class edit extends moodleform {
         $mform = $this->_form; // Don't forget the underscore! 
 
         if(isset($_GET['messageid'])){
+
             $data = $DB->get_record('local_message', ['id' => $_GET['messageid']]);
+        }
+
+            $mform->addElement('text', 'id', 'ID'); // Add elements to your form.
+            $mform->setType('id', PARAM_INT);                   // Set type of element.
+            $mform->setDefault('id', $data->id ?? null);
 
             $mform->addElement('text', 'messagetext', get_string('message_text', 'local_message')); // Add elements to your form.
-            $mform->setType('messagetext', PARAM_NOTAGS);                   // Set type of element.
-            $mform->setDefault('messagetext', $data->messagetext);        // Default value.
+            $mform->setType('messagetext', PARAM_TEXT);                   // Set type of element.
+            $mform->setDefault('messagetext', $data->messagetext ?? "");        // Default value.
             
             $mform->addElement('select', 'messagetype',  get_string('message_type', 'local_message'), $choices);
-            $mform->setDefault('messagetype', $data->messagetype);
+            $mform->setDefault('messagetype', $data->messagetype ?? "");
             $this->add_action_buttons();
         
-        }
-        else{
-            $mform->addElement('text', 'messagetext', get_string('message_text', 'local_message')); // Add elements to your form.
-            $mform->setType('messagetext', PARAM_NOTAGS);                   // Set type of element.
-            $mform->setDefault('messagetext', get_string('enter_message', 'local_message'));        // Default value.
-            
-            $mform->addElement('select', 'messagetype',  get_string('message_type', 'local_message'), $choices);
-            $mform->setDefault('messagetype', '3');
-            $this->add_action_buttons();
-        }
     }
     //Custom validation should be added here
-    function validation($data, $files) {
-        return array();
-    }
 }

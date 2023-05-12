@@ -29,13 +29,11 @@ else if ($fromform = $mform->get_data()) {
         $updateRecord->messagetext = $fromform->messagetext;
         $updateRecord->messagetype = $fromform->messagetype;
 
-        if($fromform->id != NULL){
+        if($fromform->id != null){
           $updateRecord->id = $fromform->id;
           $DB->update_record('local_message', $updateRecord);
           redirect($CFG->wwwroot . '/local/message/manage.php', get_string('updated_form', 'local_message') . $fromform->messagetext);
-        }
-      
-        else{
+        }else{
           $DB->insert_record('local_message', $updateRecord);
           //go back to manage page
           redirect($CFG->wwwroot . '/local/message/manage.php', get_string('create_form', 'local_message') . $fromform->messagetext);
